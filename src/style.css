@@ -1,3 +1,42 @@
 #groups li {
     list-style-type: none;
+    background-color: #FFFF;
+    width: 100%;
+    overflow: auto;
+}
+
+#groups {
+    -webkit-padding-end: 40px;
+}
+
+.divTour {
+    padding: 0 2em;
+}
+
+span {
+    display:inline-block;
+    width:33%;
+    text-align: left;
+}
+
+.bookNowButton {
+    float: right;
+}
+
+li {
+    margin: 0 0 0.2em 0;
+}
+
+br {
+    size: 0.2em;
+}
+
+body {
+    background-color: #036;
+}
+
+ul li~li { border-top: 1em solid #036 }
+
+.ulTours {
+    padding: 0;
 }

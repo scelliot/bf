@@ -6,6 +6,10 @@ function append(parent, el) {
     return parent.appendChild(el);
 }
 
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
 const ul = document.getElementById('groups');
 // const url = 'https://randomuser.me/api/?results=10';
 const url = 'https://api.myjson.com/bins/1983ce';
@@ -15,28 +19,42 @@ fetch(url)
         let groups = data;
         return groups.map(function(group) {
             let li = createNode('li');
-            let span = createNode('span');
-            span.innerHTML = `Group ${group.id}`;
-
+            let h2 = createNode('h2');
+            h2.innerHTML = `Group ${group.id}`;
             let ulTours = createNode('ul');
-            let spanTours = createNode('span');
-            // spanTours.innerHTML = `Tours`;
+            ulTours.setAttribute("class", "ulTours");
 
-            append(li, span);
+            append(li, h2);
             append(ul, li);
-
-            append(ulTours, spanTours);
             append(li, ulTours);
 
             group.tours.map(function(tour) {
                 console.log(tour);
 
                 let liTour = createNode('li');
-                let spanTour = createNode('span');
-                spanTour.innerHTML = `${tour.name}`;
+                liTour.setAttribute("class", "tour");
+                let divTour = createNode('div');
+                divTour.setAttribute("class", "divTour")
+                let titleTour = createNode('h3');
+                titleTour.innerHTML = `${tour.name}`;
+                let spanSeats = createNode('span');
+                spanSeats.innerHTML = `${tour.seats}`;
+                spanSeats.setAttribute("class", "numberOfSeats");
+                let spanEndDate = createNode('span');
+                spanEndDate.innerHTML = `${tour.endDate}`;
+                spanEndDate.setAttribute("class", "endDate");
+                let spanButton = createNode('span');
+                let bookNowButton = createNode('Button');
+                bookNowButton.innerHTML = `Book Now`;
+                bookNowButton.setAttribute("class", "bookNowButton");
 
-                append(liTour, spanTour);
                 append(ulTours, liTour);
+                append(liTour, divTour);
+                append(divTour, titleTour);
+                append(divTour, spanSeats);
+                append(divTour, spanEndDate);
+                append(divTour, spanButton);
+                append(spanButton, bookNowButton);
             })
         })
     })
