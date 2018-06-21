@@ -78,15 +78,17 @@ fetch(url)
                 titleTour.innerHTML = `${tour.name}`;
                 let spanSeats = createNode('span');
                 spanSeats.innerHTML = `${tour.seats}`;
+                var seats = tour.seats;
                 spanSeats.setAttribute("class", "numberOfSeats");
                 var spanEndDate = createNode('span');
-                spanEndDate.innerHTML = `${tour.endDate}`;
+                // spanEndDate.innerHTML = `${tour.endDate}`;
                 spanEndDate.setAttribute("class", "endDate");
                 spanEndDate.setAttribute("id", tour.id);
                 let spanButton = createNode('span');
                 let bookNowButton = createNode('Button');
                 bookNowButton.innerHTML = `Book Now`;
                 bookNowButton.setAttribute("class", "bookNowButton");
+                bookNowButton.addEventListener("click", handleButtonClick);
 
                 append(ulTours, liTour);
                 append(liTour, divTour);
@@ -97,9 +99,15 @@ fetch(url)
                 append(spanButton, bookNowButton);
 
                 countDown(tour);
+
+                function handleButtonClick() {
+                    seats = seats - 1;
+                    spanSeats.innerHTML = seats;
+                }
             })
         })
     })
     .catch(function(error) {
         console.log(error);
     });
+
