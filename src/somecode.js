@@ -1,3 +1,4 @@
+
 function createNode(element) {
     return document.createElement(element);
 }
@@ -10,8 +11,46 @@ function insertAfter(newNode, referenceNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
+
+
+function countDown(tour){
+
+    // Set the date we're counting down to
+    var countDownDate = new Date(tour.endDate).getTime();
+
+    //check if date is valid. If not valid show an empty string
+    if (isNaN(countDownDate)) {
+        document.getElementById(tour.id).innerHTML = "";
+    } else {
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now an the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="demo"
+            document.getElementById(tour.id).innerHTML = days + "d " + hours + "h "
+                + minutes + "m " + seconds + "s ";
+
+            // If the count down is over, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById(tour.id).innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    }
+}
+
 const ul = document.getElementById('groups');
-// const url = 'https://randomuser.me/api/?results=10';
 const url = 'https://api.myjson.com/bins/1983ce';
 fetch(url)
     .then((resp) => resp.json())
@@ -40,9 +79,10 @@ fetch(url)
                 let spanSeats = createNode('span');
                 spanSeats.innerHTML = `${tour.seats}`;
                 spanSeats.setAttribute("class", "numberOfSeats");
-                let spanEndDate = createNode('span');
+                var spanEndDate = createNode('span');
                 spanEndDate.innerHTML = `${tour.endDate}`;
                 spanEndDate.setAttribute("class", "endDate");
+                spanEndDate.setAttribute("id", tour.id);
                 let spanButton = createNode('span');
                 let bookNowButton = createNode('Button');
                 bookNowButton.innerHTML = `Book Now`;
@@ -55,6 +95,8 @@ fetch(url)
                 append(divTour, spanEndDate);
                 append(divTour, spanButton);
                 append(spanButton, bookNowButton);
+
+                countDown(tour);
             })
         })
     })
