@@ -23,6 +23,19 @@ function disableButtons(gi) {
     }
 }
 
+function displayZeroSeatsLeft(gi) {
+    let seatSpans = document.getElementsByClassName("spanSeats" + gi);
+    for (let i = 0; i < seatSpans.length; i++) {
+        seatSpans[i].innerHTML = "0 seats left";
+    }
+}
+
+function timing(element) {
+    var d = new Date();
+    var t = d.toLocaleTimeString();
+    document.getElementById("demo").innerHTML = t;
+}
+
 function countDown(tour, group, gi){
 
     // Set the date we're counting down to
@@ -56,7 +69,9 @@ function countDown(tour, group, gi){
                 clearInterval(x);
                 document.getElementById(tour.id).innerHTML = "EXPIRED";
                 disableButtons(gi);
+                displayZeroSeatsLeft(gi);
             }
+
         }, 1000);
     }
 }
@@ -99,14 +114,14 @@ fetch(url)
                 // spanEndDate.innerHTML = `${tour.endDate}`;
                 spanEndDate.setAttribute("class", "endDate");
                 spanEndDate.setAttribute("id", tour.id);
+                var timer = setInterval(timing, 1000);
+
                 let spanButton = createNode('span');
                 let bookNowButton = createNode('Button');
                 bookNowButton.innerHTML = `Book Now`;
                 bookNowButton.setAttribute("class", "bookNowButton" + groupID);
                 bookNowButton.addEventListener("click", handleButtonClick);
                 bookNowButton.setAttribute("id", "bookNowButton" + tour.id);
-
-                let countDownOver = false;
 
                 append(ulTours, liTour);
                 append(liTour, divTour);
@@ -116,17 +131,15 @@ fetch(url)
                 append(divTour, spanButton);
                 append(spanButton, bookNowButton);
 
-                countDownOver = countDown(tour, group, groupID);
-
-
-                // checkSeats(tour);
-
+                countDown(tour, group, groupID);
 
                 function handleButtonClick() {
                     seats = seats - 1;
                     spanSeats.innerHTML = seats;
                     if (seats <= 0) {
                         disableButtons(groupID);
+                        displayZeroSeatsLeft(groupID);
+                        clearInterval(x);
                     }
                 }
             });
@@ -146,6 +159,7 @@ fetch(url)
                         console.log("seats were <= 0");
                         disableButtons(gi);
                         console.log("after disableButtons-call.");
+                        displayZeroSeatsLeft(gi);
                     }
                 }
             }
