@@ -30,6 +30,16 @@ function displayZeroSeatsLeft(gi) {
     }
 }
 
+function updateBackgroundColor(gi) {
+    let liByGroupID = document.getElementById("group" + gi);
+    liByGroupID.style.backgroundColor = "#D3D3D3";
+
+    let liTour = document.getElementsByClassName("tour" + gi);
+    for (let i = 0; i < liTour.length; i++) {
+        liTour[i].style.backgroundColor = "#D3D3D3";
+    }
+}
+
 /*function myTimer(tour, countDownDate) {
     // Get todays date and time
     var now = new Date().getTime();
@@ -82,6 +92,7 @@ function countDown(tour, group, gi){
                 document.getElementById(tour.id).innerHTML = "EXPIRED";
                 disableButtons(gi);
                 displayZeroSeatsLeft(gi);
+                updateBackgroundColor(gi);
             }
 
         }, 1000);
@@ -104,6 +115,8 @@ fetch(url)
 
 
             var groupID = group.id;
+            li.setAttribute("id", "group" + groupID);
+
 
             if (group.tours.length) {
 
@@ -111,7 +124,7 @@ fetch(url)
                 console.log(tour);
 
                 let liTour = createNode('li');
-                liTour.setAttribute("class", "tour");
+                liTour.setAttribute("class", "tour" + groupID);
                 let divTour = createNode('div');
                 divTour.setAttribute("class", "divTour" + groupID);
                 let titleTour = createNode('h3');
@@ -147,14 +160,19 @@ fetch(url)
                 function handleButtonClick() {
                     seats = seats - 1;
                     spanSeats.innerHTML = seats;
+
+                    // for testing purposes only:
+
                     if (seats <= 0) {
                         disableButtons(groupID);
                         displayZeroSeatsLeft(groupID);
+                        updateBackgroundColor(groupID);
                     }
                 }
             });
 
-            // here you can put the groups stuff:
+            // appending groups as li elements to ul, and the tours to groups:
+
 
             append(li, h2);
             append(ul, li);
@@ -180,6 +198,7 @@ fetch(url)
                         disableButtons(gi);
                         console.log("after disableButtons-call.");
                         displayZeroSeatsLeft(gi);
+                        updateBackgroundColor(gi);
                     }
                 }
             }

@@ -40,3 +40,7 @@ ul li~li { border-top: 1em solid #036 }
 .ulTours {
     padding: 0;
 }
+
+h1 {
+    color: #FFFFFF;
+}
