@@ -47,7 +47,7 @@ function timer(tour, group, gi){
     //check if date is valid. If not valid show an empty string
     if (isNaN(countDownDate)) {
         if (document.getElementById(tour.id) != null) {
-            document.getElementById(tour.id).innerHTML = " ";
+            document.getElementById(tour.id).innerHTML = "unknown expiration date";
         }
     } else {
         // Update the count down every 1 second
@@ -72,14 +72,15 @@ function timer(tour, group, gi){
 
             // If the count down is over, do something
             if (distance < 0) {
-                // clearInterval(x);
-                if (document.getElementById(tour.id) != null) {
-                    document.getElementById(tour.id).innerHTML = "EXPIRED";
-                }
-                disableButtons(gi);
-                displayZeroSeatsLeft(gi);
+
                 if (document.getElementById("group" + gi) != null) {
                     updateBackgroundColor(gi);
+                    if (document.getElementById(tour.id) != null) {
+                        document.getElementById(tour.id).innerHTML = "EXPIRED";
+                        disableButtons(gi);
+                        displayZeroSeatsLeft(gi);
+                        stopCountdown(gi);
+                    }
                 }
             }
     }
@@ -89,6 +90,29 @@ function stopCountdown(gi) {
     let spans = document.getElementsByClassName("endDate" + gi);
     for (let i = 0; i < spans.length; i++) {
         clearInterval(spans[i].timerID);
+    }
+}
+
+function initializingEndDate(tour, spanEndDate) {
+    if (tour.hasOwnProperty('endDate')){
+        let countDownDate = new Date(tour.endDate).getTime();
+        if (isNaN(countDownDate)) {
+            spanEndDate.innerHTML = "unknown expiration date";
+        } else {
+            let now = new Date().getTime();
+            let distance = countDownDate - now;
+            if (distance < 0) {
+                spanEndDate.innerHTML = "EXPIRED";
+            } else {
+                let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                spanEndDate.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            }
+        }
+    } else {
+        spanEndDate.innerHTML = "unknown expiration date";
     }
 }
 
@@ -130,10 +154,12 @@ fetch(url)
                 spanSeats.innerHTML = `${tour.seats}`;
                 spanSeats.setAttribute("class", "spanSeats" + groupID);
 
-                var spanEndDate = createNode('span');
-                // spanEndDate.innerHTML = `${tour.endDate}`;
+                let spanEndDate = createNode('span');
                 spanEndDate.setAttribute("class", "endDate" + groupID);
                 spanEndDate.setAttribute("id", tour.id);
+
+                // initializing end date
+                initializingEndDate(tour, spanEndDate);
 
                 let spanButton = createNode('span');
                 let bookNowButton = createNode('Button');

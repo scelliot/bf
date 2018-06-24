@@ -1,12 +1,12 @@
 #groups li {
-    list-style-type: none;
     background-color: #FFFF;
     width: 100%;
     overflow: auto;
 }
 
 #groups {
-    -webkit-padding-end: 40px;
+    padding: 1em;
+    list-style-type: none;
 }
 
 .divTour {
@@ -35,7 +35,7 @@ body {
     background-color: #6699cc;
 }
 
-ul li~li { border-top: 1em solid #6699cc; }
+ul li~li { border-top: 0.5em solid #6699cc; }
 
 .ulTours {
     padding: 0;
