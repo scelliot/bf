@@ -30,11 +30,23 @@ function displayZeroSeatsLeft(gi) {
     }
 }
 
-function timing(element) {
+/*function myTimer(tour, countDownDate) {
+    // Get todays date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now an the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     var d = new Date();
     var t = d.toLocaleTimeString();
-    document.getElementById("demo").innerHTML = t;
-}
+    document.getElementById(tour.id).innerHTML = days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ";
+}*/
 
 function countDown(tour, group, gi){
 
@@ -90,11 +102,10 @@ fetch(url)
             let ulTours = createNode('ul');
             ulTours.setAttribute("class", "ulTours");
 
-            append(li, h2);
-            append(ul, li);
-            append(li, ulTours);
 
             var groupID = group.id;
+
+            if (group.tours.length) {
 
             group.tours.map(function(tour) {
                 console.log(tour);
@@ -114,7 +125,6 @@ fetch(url)
                 // spanEndDate.innerHTML = `${tour.endDate}`;
                 spanEndDate.setAttribute("class", "endDate");
                 spanEndDate.setAttribute("id", tour.id);
-                var timer = setInterval(timing, 1000);
 
                 let spanButton = createNode('span');
                 let bookNowButton = createNode('Button');
@@ -133,16 +143,26 @@ fetch(url)
 
                 countDown(tour, group, groupID);
 
+
                 function handleButtonClick() {
                     seats = seats - 1;
                     spanSeats.innerHTML = seats;
                     if (seats <= 0) {
                         disableButtons(groupID);
                         displayZeroSeatsLeft(groupID);
-                        clearInterval(x);
                     }
                 }
             });
+
+            // here you can put the groups stuff:
+
+            append(li, h2);
+            append(ul, li);
+            append(li, ulTours);
+
+            } else {
+                // show nothing if the group doesn't contain any tours.
+            }
 
             checkSeats(groupID);
             function checkSeats(gi) {
