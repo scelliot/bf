@@ -65,7 +65,9 @@ function countDown(tour, group, gi){
 
     //check if date is valid. If not valid show an empty string
     if (isNaN(countDownDate)) {
-        document.getElementById(tour.id).innerHTML = "";
+        if (document.getElementById(tour.id) != null) {
+        document.getElementById(tour.id).innerHTML = " ";
+        }
     } else {
         // Update the count down every 1 second
         var x = setInterval(function () {
@@ -82,17 +84,23 @@ function countDown(tour, group, gi){
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Output the result in an element with id="demo"
+            // Output the result in an element with id=tour.id
+            if (document.getElementById(tour.id) != null) {
             document.getElementById(tour.id).innerHTML = days + "d " + hours + "h "
                 + minutes + "m " + seconds + "s ";
+            }
 
             // If the count down is over, do something
             if (distance < 0) {
                 clearInterval(x);
+                if (document.getElementById(tour.id) != null) {
                 document.getElementById(tour.id).innerHTML = "EXPIRED";
+                }
                 disableButtons(gi);
                 displayZeroSeatsLeft(gi);
+                if (document.getElementById("group" + gi) != null) {
                 updateBackgroundColor(gi);
+                }
             }
 
         }, 1000);
@@ -105,7 +113,9 @@ fetch(url)
     .then((resp) => resp.json())
     .then(function(data) {
         let groups = data;
+        console.log("data from api: ", groups);
         return groups.map(function(group) {
+            console.log("group found: ", group);
 
             let li = createNode('li');
             let h2 = createNode('h2');
