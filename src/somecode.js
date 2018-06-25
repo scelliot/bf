@@ -169,6 +169,7 @@ fetch(url)
                 bookNowButton.setAttribute("class", "bookNowButton" + groupID);
                 bookNowButton.addEventListener("click", handleButtonClick);
                 bookNowButton.setAttribute("id", "bookNowButton" + tour.id);
+                spanButton.setAttribute("content", "button");
 
                 append(ulTours, liTour);
                 append(liTour, divTour);

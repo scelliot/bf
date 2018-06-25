@@ -1,3 +1,4 @@
+
 #groups li {
     background-color: #FFFF;
     width: 100%;
@@ -13,9 +14,15 @@
 
 span {
     display:inline-block;
-    width:33%;
+    width:50%;
     font-family: Arial;
     color: #404040;
+}
+
+[content="button"] {
+    width: 100%;
+    text-align: center;
+    margin: 0.5em 0 0 0;
 }
 
 [content="seats"] {
@@ -26,9 +33,7 @@ span {
     text-align: center;
 }
 
-button {
-    float: right;
-}
+
 
 li {
     margin: 0 0 1em 0;
@@ -60,4 +65,19 @@ h2 {
 h3 {
     font-family: "Arial";
     color: #404040;
+}
+
+@media screen and (min-width: 600px) {
+    span {
+        width: 33%;
+    }
+    [content="button"] {
+        width: 33%;
+        text-align: center;
+        margin: 0;
+    }
+
+    button {
+        float: right;
+    }
 }
