@@ -39,7 +39,7 @@ function updateBackgroundColor(gi) {
     }
 }
 
-function formattingTime(number) {
+function formatTime(number) {
     return (number < 10 ? '0' : '') + number;
 }
 
@@ -63,10 +63,10 @@ function timer(tour, group, gi){
             var distance = countDownDate - now;
 
             // Time calculations for days, hours, minutes and seconds
-            var days = formattingTime(Math.floor(distance / (1000 * 60 * 60 * 24)));
-            var hours = formattingTime(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-            var minutes = formattingTime(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-            var seconds = formattingTime(Math.floor((distance % (1000 * 60)) / 1000));
+            var days = formatTime(Math.floor(distance / (1000 * 60 * 60 * 24)));
+            var hours = formatTime(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            var minutes = formatTime(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+            var seconds = formatTime(Math.floor((distance % (1000 * 60)) / 1000));
 
             // Output the result in an element with id=tour.id
             if (document.getElementById(tour.id) != null) {
@@ -107,10 +107,10 @@ function initializingEndDate(tour, spanEndDate) {
             if (distance < 0) {
                 spanEndDate.innerHTML = "EXPIRED";
             } else {
-                let days = formattingTime(Math.floor(distance / (1000 * 60 * 60 * 24)));
-                let hours = formattingTime(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-                let minutes = formattingTime(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-                let seconds = formattingTime(Math.floor((distance % (1000 * 60)) / 1000));
+                var days = formatTime(Math.floor(distance / (1000 * 60 * 60 * 24)));
+                var hours = formatTime(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                var minutes = formatTime(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+                var seconds = formatTime(Math.floor((distance % (1000 * 60)) / 1000));
                 spanEndDate.innerHTML = days + " days " + hours + ":" + minutes + ":" + seconds;
             }
         }
@@ -186,7 +186,7 @@ fetch(url)
 
                 function handleButtonClick() {
                     seats = seats - 1;
-                    spanSeats.innerHTML = seats;
+                    spanSeats.innerHTML = seats + " seats left";
 
                     // for testing purposes only:
 
