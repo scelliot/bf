@@ -151,12 +151,14 @@ fetch(url)
                 titleTour.innerHTML = `${tour.name}`;
                 let spanSeats = createNode('span');
                 let seats = tour.seats;
-                spanSeats.innerHTML = `${tour.seats}`;
+                spanSeats.innerHTML = `${tour.seats} seats left`;
                 spanSeats.setAttribute("class", "spanSeats" + groupID);
+                spanSeats.setAttribute("content", "seats");
 
                 let spanEndDate = createNode('span');
                 spanEndDate.setAttribute("class", "endDate" + groupID);
                 spanEndDate.setAttribute("id", tour.id);
+                spanEndDate.setAttribute("content", "endDate");
 
                 // initializing end date
                 initializingEndDate(tour, spanEndDate);
