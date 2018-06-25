@@ -39,6 +39,10 @@ function updateBackgroundColor(gi) {
     }
 }
 
+function formattingTime(number) {
+    return (number < 10 ? '0' : '') + number;
+}
+
 function timer(tour, group, gi){
 
     // Setting the date we're counting down to
@@ -59,15 +63,14 @@ function timer(tour, group, gi){
             var distance = countDownDate - now;
 
             // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            var days = formattingTime(Math.floor(distance / (1000 * 60 * 60 * 24)));
+            var hours = formattingTime(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            var minutes = formattingTime(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+            var seconds = formattingTime(Math.floor((distance % (1000 * 60)) / 1000));
 
             // Output the result in an element with id=tour.id
             if (document.getElementById(tour.id) != null) {
-                document.getElementById(tour.id).innerHTML = days + "d " + hours + "h "
-                    + minutes + "m " + seconds + "s ";
+                document.getElementById(tour.id).innerHTML = days + " days " + hours + ":" + minutes + ":" + seconds;
             }
 
             // If the count down is over, do something
@@ -104,11 +107,11 @@ function initializingEndDate(tour, spanEndDate) {
             if (distance < 0) {
                 spanEndDate.innerHTML = "EXPIRED";
             } else {
-                let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                spanEndDate.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                let days = formattingTime(Math.floor(distance / (1000 * 60 * 60 * 24)));
+                let hours = formattingTime(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                let minutes = formattingTime(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+                let seconds = formattingTime(Math.floor((distance % (1000 * 60)) / 1000));
+                spanEndDate.innerHTML = days + " days " + hours + ":" + minutes + ":" + seconds;
             }
         }
     } else {
